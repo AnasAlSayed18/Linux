@@ -1,0 +1,14 @@
+hour=$(who |tr -s " " |cut -d" " -f4 | cut -d: -f1)
+
+if [ $hour -lt 12 ]; then
+    massg="Good morning"
+elif [ $hour -lt 18 ]; then
+    massg="Good afternoon"
+else
+    massg="Good evening"
+fi
+
+user=$(whoami)
+
+echo "$massg $user"
+

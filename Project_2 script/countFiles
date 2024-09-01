@@ -1,0 +1,51 @@
+if [ "$#" -ne 2 ]
+then
+    echo "Error: The number of arguments is not equal to two."
+    exit 1
+fi
+
+if [ ! -d "$1" ]
+ then
+    echo "Error: The first argument is not a directory."
+    exit 1
+fi
+
+
+if [ ! -d "$2" ]
+ then
+    echo "Error: The second argument is not a directory."
+    exit 1
+fi
+
+dir1="$1"
+dir2="$2"
+    echo "The following files appear in the directories \"$dir1\" and \"$dir2\":"
+
+for f1 in $1/*
+do
+
+if [ -f "$f1" ] 
+ then 
+
+  for f2 in $2/*
+    do 
+    
+      if [ -f "$f2" ]
+       then
+       p1=$(echo "$1/" | sed 's/\//-/g')
+       p2=$(echo "$2/" | sed 's/\//-/g')
+
+
+      n1=$(echo "$f1" | sed 's/\//-/g' | sed "s/$p1/-/g" | cut -d- -f2)
+      n2=$(echo "$f2" | sed 's/\//-/g' | sed "s/$p2/-/g" | cut -d- -f2)
+       
+        
+        if [ "$n1" = "$n2" ]
+        then
+        echo "$n1"
+        fi
+      fi
+    done
+   fi
+ done
+            

@@ -1,0 +1,51 @@
+if [ $# -lt 2 ]
+ then
+    echo "Error,The number of arguments is less than two..."
+    exit 1
+fi
+
+
+
+search_word="$1"
+shift
+
+if [ ! -f "$search_word" ]; then
+    echo "Error,The first argument is not a type of regular file..."
+    exit 1
+fi
+
+for dir in $*
+ do
+    if [ -d "$dir" ] 
+    then
+
+    for f in $dir/*
+     do
+
+     if [ -f "$f" ]
+      then    
+            match_count=$(grep  "$search_word" "$f" | wc -l)
+ 
+            if [ "$match_count" -gt 0 ]
+             then
+                echo "The Word \"$search_word\" appears $match_count times in the following file: " 
+                
+                line_num=$(grep -n  "$search_word" "$f" |cut -d: -f1) 
+                
+                line_cheek=$(echo $line_num|wc -w )
+                if [ $line_cheek -gt 1 ]
+                then
+                    line_num=$(grep -n  "$search_word" "$f" |cut -d: -f1 | tr '\n' ',') 
+                fi
+                
+                echo "/$f.txt   line:  $line_num "   
+            fi
+        
+        else
+            echo "Error,The first argument is not a type of regular file..." >>stderr
+         fi
+        done
+    else
+        echo "Warning: $dir is not a directory."
+    fi
+done

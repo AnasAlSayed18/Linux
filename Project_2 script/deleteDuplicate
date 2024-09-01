@@ -1,0 +1,52 @@
+if [ "$#" -lt 2 ]
+ then
+    echo "Error please enter two arguments "  >>stderr
+    exit 1
+fi
+
+if [ ! -d $1 ]
+ then
+    echo "Error, $1 not a directory "  >>stderr
+    exit 1
+fi
+if [ ! -d $2 ]
+ then
+    echo "Error, $2 not a directory "  >>stderr
+    exit 1
+fi
+
+
+
+for f1 in $1/*
+do
+if [ -f $f1 ]
+ then 
+
+     for f2 in $2/*
+     do
+      if [ -f $f2 ]
+       then 
+        p1=$(echo "$1/" | sed 's/\//-/g')
+       p2=$(echo "$2/" | sed 's/\//-/g')
+
+
+      n1=$(echo "$f1" | sed 's/\//-/g' | sed "s/$p1/-/g" | cut -d- -f2)
+      n2=$(echo "$f2" | sed 's/\//-/g' | sed "s/$p2/-/g" | cut -d- -f2)
+      
+           f1Size=$(echo $(wc -c $f1)|cut -d" " -f1)       
+           f2Size=$(echo $(wc -c $f2)|cut -d" " -f1)   
+           
+            
+
+          if [ "$n1" = "$n2" ] && [ "$f1Size" = "$f2Size" ]
+ 	   then
+	   rm $f2
+	   echo "
+File $n2 has been deleted from the $2 directory"
+	 fi
+	fi
+	
+       done
+     fi
+    done
+

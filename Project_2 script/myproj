@@ -1,0 +1,96 @@
+./welcome
+
+echo " 
+Please Choose one of the following options: 
+1) Change Permission for All Directory. 
+2) Print all empty directories. 
+3) Change Permission for All Files 
+4) Delete Duplicated files    
+5) Count and display all files that contain the same word. 
+6) Count the number of files that have the same name inside different directories. 
+7) Display a Goodbye message to the host .
+"
+read choice
+while [ $choice -ne 7 ]
+do
+if [ "$choice" -ge 1 ] && [ "$choice" -le 7 ]
+then
+case $choice in 
+1) 
+echo "Please enter the Permission: "
+read r1
+ echo "Please enter the Directory that you want to change insid: "
+read r2
+./chmodAllDirectories $r1 $r2
+;;
+
+2) 
+echo "
+Please enter the Directory that you want to cheeck: "
+read r1
+./printEmptyDirectories  $r1
+
+
+;;
+
+3)
+echo "
+Please enter the File that you want to remove x permission for it: "
+read r1
+echo "
+Enter the Directories that $r1 inside it: "
+read  r2
+./removeX  $r1 $r2
+;;
+
+4)
+echo "Please enter the first Directory: "
+read r1
+echo "Please enter the second Directory: "
+read r2
+./deleteDuplicate $r1 $r2
+;;
+
+5)
+echo "Please enter the word to search for: "
+read r1
+echo "Please enter  a list of directories: "
+read r2
+./countWord $r1 $r2
+;;
+
+6)
+echo "Please enter the first directory : "
+read r1
+echo "Please enter the second directory : "
+read r2
+./countFiles $r1 $r2
+;;
+
+*) 
+echo "
+Erorr, Please enter a choise from 1 to 7
+"
+esac
+else
+echo "
+Erorr, Please enter a choise from 1 to 7
+"
+fi
+
+echo " 
+Please Choose one of the following options: 
+1) Change Permission for All Directory. 
+2) Print all empty directories. 
+3) Change Permission for All Files 
+4) Delete Duplicated files    
+5) Count and display all files that contain the same word. 
+6) Count the number of files that have the same name inside different directories. 
+7) Display a Goodbye message to the host .
+"
+read choice
+done
+
+user=$(whoami)
+echo "
+Goodbye $user",I hope to see you soon...

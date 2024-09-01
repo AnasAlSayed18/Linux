@@ -1,0 +1,16 @@
+if [ $# -eq 0 ] || [ $# -eq 1 ] 2> stderr
+then 
+echo "Error, Please enter chmodAllDirectories newpermission maindirecroty " >>stderr
+exit 1
+fi
+
+for file in $2/*
+do
+
+if [ -d $file ]
+then
+chmod $1 $file 
+echo " $file  Permission has been changed to $1"
+fi
+done
+
